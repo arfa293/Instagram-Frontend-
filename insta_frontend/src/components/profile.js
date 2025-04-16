@@ -10,7 +10,7 @@ const Profile = () => {
   const { user } = useSelector((state) => state.user);
   const [profile, setProfile] = useState(null);
   const [posts, setPosts] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null); // State for the selected image
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     if (!user || !user.token) return;
@@ -57,11 +57,11 @@ const Profile = () => {
   };
 
   const handleImageClick = (imageUrl) => {
-    setSelectedImage(imageUrl); // Set the selected image to display in the modal
+    setSelectedImage(imageUrl); 
   };
 
   const closeModal = () => {
-    setSelectedImage(null); // Close the modal by resetting the selected image
+    setSelectedImage(null); 
   };
 
   if (!user) {
@@ -114,12 +114,12 @@ const Profile = () => {
                 alt={post.caption}
                 style={{
                   width: "100%",
-                  height: "200px", // Adjust to desired image height
-                  objectFit: "cover", // Crop the image to fit the container while keeping aspect ratio
+                  height: "200px", 
+                  objectFit: "cover", 
                   borderRadius: "8px",
-                  cursor: "pointer", // Change cursor to indicate clickable image
+                  cursor: "pointer", 
                 }}
-                onClick={() => handleImageClick(post.image_url)} // Handle click event to show image in modal
+                onClick={() => handleImageClick(post.image_url)} 
               />
             )}
             <p className="mt-2">{new Date(post.created_at).toLocaleString()}</p>
@@ -127,7 +127,7 @@ const Profile = () => {
         ))}
       </div>
 
-      {/* Modal to show the full-size image */}
+      
       {selectedImage && (
         <div
           className="modal-overlay"
@@ -143,7 +143,7 @@ const Profile = () => {
             alignItems: "center",
             zIndex: 1000,
           }}
-          onClick={closeModal} // Close modal when clicking outside the image
+          onClick={closeModal} 
         >
           <img
             src={selectedImage}
