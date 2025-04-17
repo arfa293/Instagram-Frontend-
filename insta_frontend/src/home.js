@@ -88,7 +88,7 @@ const Home = () => {
           <img
             src="https://via.placeholder.com/150"
             className="card-img-top"
-            alt="Photo"
+            alt=""
           />
           <div className="card-body">
             <h5 className="card-title">Followed Post</h5>

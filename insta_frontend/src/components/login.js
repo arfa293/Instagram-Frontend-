@@ -50,12 +50,12 @@ const LoginForm = () => {
             <button type="submit" className="btn btn-primary" disabled={loading}>
               {loading ? "Logging in..." : "Login"}
             </button>
+            
           </div>
         </form>
-
-        {error && <p className="text-danger mt-3 text-center">{error}</p>}
-
+        {error && <p className="text-danger mt-3 text-center">{error.error}</p>}        
         <p className="text-center mt-3 mb-0">
+          
           Don't have an account?{" "}
           <Link to="/register" className="text-decoration-none">
             Register here

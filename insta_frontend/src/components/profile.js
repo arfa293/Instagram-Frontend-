@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { logoutUser } from "../redux/userSlice";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import UpdateBio from "./updatebio";
+import UpdateUsername from "./updateusername"; // Importing update username form
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -11,6 +13,8 @@ const Profile = () => {
   const [profile, setProfile] = useState(null);
   const [posts, setPosts] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [showUpdateBio, setShowUpdateBio] = useState(false);
+  const [showUpdateUsername, setShowUpdateUsername] = useState(false); // New state
 
   useEffect(() => {
     if (!user || !user.token) return;
@@ -57,11 +61,11 @@ const Profile = () => {
   };
 
   const handleImageClick = (imageUrl) => {
-    setSelectedImage(imageUrl); 
+    setSelectedImage(imageUrl);
   };
 
   const closeModal = () => {
-    setSelectedImage(null); 
+    setSelectedImage(null);
   };
 
   if (!user) {
@@ -79,12 +83,32 @@ const Profile = () => {
       <h3>{profile?.username}</h3>
       <p>{profile?.bio || "No bio yet."}</p>
 
-      <button onClick={Navigatetocreatepost} className="btn btn-outline-danger mt-3 me-2">
-        Create Post
-      </button>
-      <button onClick={handleLogout} className="btn btn-outline-danger mt-3">
-        Logout
-      </button>
+      <div className="d-flex justify-content-center flex-wrap">
+        <button
+          onClick={() => setShowUpdateBio((prev) => !prev)}
+          className="btn btn-outline-success mb-3 me-2"
+        >
+          {showUpdateBio ? "Cancel" : "Update Bio"}
+        </button>
+
+        <button
+          onClick={() => setShowUpdateUsername((prev) => !prev)}
+          className="btn btn-outline-warning mb-3 me-2"
+        >
+          {showUpdateUsername ? "Cancel" : "Update Username"}
+        </button>
+
+        <button onClick={Navigatetocreatepost} className="btn btn-outline-primary mb-3 me-2">
+          Create Post
+        </button>
+
+        <button onClick={handleLogout} className="btn btn-outline-danger mb-3">
+          Logout
+        </button>
+      </div>
+
+      {showUpdateBio && <UpdateBio />}
+      {showUpdateUsername && <UpdateUsername />}
 
       <h3 className="mt-5">My Posts</h3>
       <div
@@ -114,12 +138,12 @@ const Profile = () => {
                 alt={post.caption}
                 style={{
                   width: "100%",
-                  height: "200px", 
-                  objectFit: "cover", 
+                  height: "200px",
+                  objectFit: "cover",
                   borderRadius: "8px",
-                  cursor: "pointer", 
+                  cursor: "pointer",
                 }}
-                onClick={() => handleImageClick(post.image_url)} 
+                onClick={() => handleImageClick(post.image_url)}
               />
             )}
             <p className="mt-2">{new Date(post.created_at).toLocaleString()}</p>
@@ -127,7 +151,6 @@ const Profile = () => {
         ))}
       </div>
 
-      
       {selectedImage && (
         <div
           className="modal-overlay"
@@ -143,7 +166,7 @@ const Profile = () => {
             alignItems: "center",
             zIndex: 1000,
           }}
-          onClick={closeModal} 
+          onClick={closeModal}
         >
           <img
             src={selectedImage}
